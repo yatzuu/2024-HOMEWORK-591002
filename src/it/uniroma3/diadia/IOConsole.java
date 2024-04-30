@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Classe che centralizza l’accesso a System.out/System.in 
  */
 
-public class IOConsole {
+public class IOConsole implements IO {
 	
 	public void mostraMessaggio(String msg) {
 		System.out.println(msg);

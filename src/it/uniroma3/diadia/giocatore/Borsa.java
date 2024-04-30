@@ -35,6 +35,13 @@ public class Borsa {
 		return true;
 	}
 	
+	public boolean getPesoRimanente(Attrezzo a) {
+		if(a != null && this.getPesoMax() - this.getPeso() >= a.getPeso())
+			return true;
+		
+		return false; 
+	}
+	
 	public int getPesoMax() {
 		return pesoMax;
 	}
@@ -57,7 +64,6 @@ public class Borsa {
 			for (int i= 0; i<this.numeroAttrezzi; i++)
 				peso += this.attrezzi[i].getPeso();
 		}
-		
 		return peso;
 	}
 	
@@ -92,9 +98,9 @@ public class Borsa {
 	StringBuilder s = new StringBuilder();
 	
 	if (!this.isEmpty()) {
-		s.append("("+this.getPeso()+"kg/"+this.getPesoMax()+"kg) = ");
+		s.append("Borsa: ("+this.getPeso()+"kg/"+this.getPesoMax()+"kg) => ");
 	for (int i= 0; i<this.numeroAttrezzi; i++)
-		s.append(attrezzi[i].toString()+" ");
+		s.append(attrezzi[i].toString()+", ");
 	}
 	else
 		s.append("Borsa vuota");
