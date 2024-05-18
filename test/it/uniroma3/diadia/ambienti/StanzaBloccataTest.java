@@ -2,7 +2,6 @@ package it.uniroma3.diadia.ambienti;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ public class StanzaBloccataTest {
 	private Attrezzo a;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		sb = new StanzaBloccata("StanzaBloccata", "ovest", "grimaldello");
 		s = new Stanza("Stanzetta");
 		a = new Attrezzo("grimaldello", 1);
@@ -23,9 +22,6 @@ public class StanzaBloccataTest {
 		
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
 	public void testGetStanzaAdiacenteDirezioneBloccata() {

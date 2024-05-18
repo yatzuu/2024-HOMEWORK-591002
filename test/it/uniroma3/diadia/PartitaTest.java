@@ -3,19 +3,33 @@ package it.uniroma3.diadia;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 public class PartitaTest {
 
-	Partita p = new Partita();
-	Stanza s = new Stanza("Stanza");
+	Labirinto labirinto;
+	Partita p;
+	Stanza s;
+
+	@Before
+	public void setUp() {
+		 labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("LabCampusOne")
+				.addStanzaVincente("Biblioteca")
+				.addAdiacenza("LabCampusOne", "Biblioteca", "ovest")
+				.getLabirinto();
+		 p = new Partita(labirinto);
+		 s = new Stanza("Stanza");
+	}
 	
 	@Test
 	public void testGetStanzaVincente() {
-		assertEquals("Laboratorio Campus", p.getLabirinto().getStanzaVincente().getNome());
+		assertEquals("Biblioteca", p.getLabirinto().getStanzaVincente().getNome());
 	}
 
 	@Test

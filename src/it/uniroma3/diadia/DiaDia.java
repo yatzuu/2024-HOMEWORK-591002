@@ -1,8 +1,9 @@
 package it.uniroma3.diadia;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
-
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -15,6 +16,7 @@ import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
  *          
  * @version base
  */
+
 
 public class DiaDia {
 
@@ -29,25 +31,23 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final public String[] elencoComandi = {"vai", "prendi", "posa", "fine", "aiuto"};
-
 	private Partita partita;
 	private IO io;
 
-	public DiaDia(IO console) {
-		this.io = console;
-		this.partita = new Partita();
+	public DiaDia(IO io, Labirinto labirinto) {
+		this.io = io;
+		this.partita = new Partita(labirinto);
 	}
 
 
 	public void gioca() {
 		String istruzione; 
 		io.mostraMessaggio(MESSAGGIO_BENVENUTO);
+		
 		do {
 			istruzione = io.leggiRiga();
 
-		}while (!processaIstruzione(istruzione) );
-
+		} while (!processaIstruzione(istruzione));
 	}   
 
 	/**
@@ -73,13 +73,26 @@ public class DiaDia {
 
 	}   
 	
-
 	
-		
 	
 	public static void main(String[] argc) {
-		IO console = new IOConsole();
-		DiaDia gioco = new DiaDia(console);
+		IO io = new IOConsole();
+		
+		Labirinto labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAttrezzo("martello", 3)
+				.addStanzaVincente("Biblioteca")
+				.addAdiacenza("Atrio", "Biblioteca", "nord")
+				.addAdiacenza("Biblioteca", "Atrio", "sud")
+				.addStanza("Bagno")
+				.addAdiacenza("Bagno", "Atrio", "sud")
+				.addAdiacenza("Atrio", "Bagno", "nord")
+				.addStanza("Studio")
+				.addAdiacenza("Studio", "Atrio", "est")
+				.addAdiacenza("Atrio", "Studio", "ovest")
+				.getLabirinto();
+		
+		DiaDia gioco = new DiaDia(io, labirinto);
 		gioco.gioca();
 	}
 }
